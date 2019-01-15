@@ -1,0 +1,15 @@
+[{
+  "name": "apps",
+  "owner": "TradeshiftCN",
+  "repo": "Apps",
+  "state": "all",
+  "milestone": 1,
+  "per_page": 100
+}, {
+  "name": "cnPayApps",
+  "owner": "TradeshiftCN",
+  "repo": "cn-pay-apps",
+  "state": "all",
+  "milestone": 1,
+  "per_page": 100
+}]
