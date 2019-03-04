@@ -1,0 +1,184 @@
+runtime里的locale和moment支持的locale是對應的嗎？
+YES
+import 语法不是这样的
+已调整
+记得好像有个queryAll方法可以使用
+@HuapengZhangTS queryAll 是cn-pay-apps rest 后来自己写的 apps这的边的rest目前还没有这个方法
+这样好像是识别不出来的。你看看前端群里华鹏说的
+这个跟华鹏说的情况不一样，翻译的部分t('[summary total]Total')没有用模板字符串，所以能识别。目前这部分有翻译，我只是加个context跟其他的做区分。
+![image](https://user-images.githubusercontent.com/5295157/51966002-38f0ff80-24a6-11e9-8d6d-a6baf20bbd0e.png)
+ 
+ 你既然已经合了，那就试试看吧，如果不行的话，就按这边的改一下
+好的
+改成改成checkPremadeHasObsoleting
+ 
+moment().date()
+这三个组件命名统一下
+这里样式应该要统一的，不需要区分
+使用BEM
+this.$scope.data可以直接在参数里获取到
+这里的判断需要确认下
+这里不需要这样写，直接定义的时候 let rows = [];
+这里不需要的话就删掉吧
+`@ts-unit`
+margin: @ts-unit;
+must?
+class命名首字母大写
+不需要return
+设计稿是什么样的？这个话术很奇怪啊
+save这个属性代表的如果是button的label的话，那么命名上就体现出来
+![image](https://user-images.githubusercontent.com/33616744/51966665-0c3de780-24a8-11e9-917d-ac079c3df351.png)
+ 设计稿是这样描述的
+写一个空的then是为了什么？
+这边的4，5能用class区分吗？
+1st, 2nd, 3rd, 4th...
+ 
+ 没有1th这种说法的。
+![image](https://user-images.githubusercontent.com/33616744/51968027-dbf84800-24ab-11e9-941c-f8ed8b3d7377.png)
+ 描述确认改成这个
+Is `this.name = Info.country(Country) || Name;` better ?
+`253 - 5`
+yes ,it's better
+the original error message was lost
+这个promise不用return吗？
+出错了也要继续轮询吗
+出错了不会到catch里面吗？
+这里用map不合适，没有返回值
+不需要翻译吗？
+这里修改一下，命名看起来只是判断是否为空，但是实际包含了调用了开票的方法
+这个有声明常量吗
+状态多的话，使用常量是不是更好一些
+103行有声明
+那可以用常量，不直接用字符串，好维护一点
+看错，这个没有常量
+这个到底是给预制发票用的，还是给Proforma用的
+哦，我看懂了，是给Proforma用的。
+嗯嗯，我在截图下补充个说明
+_.get(ctrl, 'selectedBPCreationDateFilter.value.billingProposalCreationStartDate')，_.get(ctrl, 'selectedBPCreationDateFilter.value.billingProposalCreationEndDate')这两个值可以存下来，供下面使用，会看起来简洁一点
+同上
+allButttons和return allButttons.filter建议重写下，return 的太复杂
+末尾符号是否需要，CREATE_INVOICE_SUCCESSFULLY是有的
+这个handleError是否和middleware里面的error处理逻辑冲突？
+加默认值
+不冲突
+sandbox和production要改吗？
+我看下原来的配置，不用
+这里就是sandbox, 目前testing环境也是sandbox
+_.some
+这个改动的目的是什么
+如果 parameters.query 为null 会报错
+如果用_.some ,那么下面的 _.includes 就不好判断了啊
+什么情况下为是null？
+设置了 properties参数，不设置 query 的时候。这个是我做参数设置的时候遇到的，可能之前并没有，我建议是加上，这个更稳妥一些
+上面有相同的代码，抽成一个方法？
+`_.includes(property.value, 'fapiao.normal')`这个判断规则，为什么不和上面的
+ `_.includes(property.value, 'tradeshift.invoice.fapiao.special')`一样带上前缀？
+单词拼错！
+因为有 ‘tradeshift.fapiao.3.0’ 这个类型，这个也是增值税发票专票，这个是问了Jack的
+已经抽取
+已经修改
+setIssueDate(newDate)
+import
+100年？是产品需求？
+加上cndocumentui前缀
+这中命名好像不是BEM规范，是Global的推荐吗
+connectionId一定不空吗
+这个import是什么意思？
+这个字段不清楚，不是我这个task,我只要向data对象添加新的字段给后端就行。不过这个字段是函数的参数，别的地方传过来应该不是空
+块__元素--修饰词，然后info-top-right里面的-是连接作用。网上BEM好几个版本，我也有点懵
+info-top-right 的命名有点问题吧，可以暂时先保持这样，这块命名不太好命名
+可以为空，但不影响
+Download logs需要翻译
+翻译
+命名使用驼峰方式，首字母小写
+用ES6的const或者let
+循环可以用数组的原生方法替代
+popup如果在下面只用到一次，不需要声明
+这些消息需要支持翻译
+用原生的promise
+这个catch可以省了
+这三个class 是属于这个directive的吗？不是的话，不应该出现在这里
+翻译
+这个文件是从别的文件内容拷过来的吗
+翻译的key，不要用大写。可以通过CSS去转。
+用原生的promise
+是的
+如果拷过来，要做一下精简，不需要的代码清理掉。如果和其他部分有可以抽取的公共部分，可以提取出来。
+为什么不能大写啊，那首字符大写的这种也不能写吗？
+全部大写的，可以通过CSS去设置
+首字母大写的，当然是可以的。
+是否需要翻译？
+这里选项不需要翻译
+no need to add RULE_NAME_MAP to class
+delete this debug code
+add variable type if possible
+add $apply in catch block
+BEM 中这个应该是Block
+footer应该是block
+拷过来的样式，改名字？删掉没用的吗？
+不需要大括号，
+是的。
+use const
+translate
+prefer Array.includes
+maybe this.$scope.$apply()?
+首先，这个tab跟隔壁的my network tab的逻辑差不多，所以直接沿用了那边的$evalAsync()。其次，$evalAsync()应该性能会好一点吧
+为什么不直接用string template
+直接用moment的方法吧
+注释现在没有必要了，其他LGTM
+为什么要改ChromeService？
+这个文件不要改，你可以清空下node_modules目录，重新npm install一下
+如果只需要中文，不要用t了
+`nonTSUIApps`这个属性在v4里面已经删掉了，这边留着也没用
+我就是这样操作的，奇怪为什么还是从tradeshift那边resolved的
+那cn-pay-apps的怎么办？
+node_modules你删了吗？package-lock你是替换了之后再npm install的吗？
+也去掉了
+不加的话以后换成英文是找起来比较麻烦
+通过其他方式标识吧，我不太想把中文推到crowdin
+may be use standard BEM style:
+ currency__field--readonly
+加下划线是为什么？这个有很多是在改底层组件的样式，尝试一下用类名或者调用方式是否存在问题
+BEM
+cndocumentui. index也要加一下
+这个是复制docNumber的，IssuDate也是这样的，我统一改下吧
+直接使用变量，没必要用方法
+this.invoice.inputId && (!this.invoice.lookupSubStatus || this.invoice.lookupSubStatus.manual) && ...
+改成checkPremadeHasObsoleting
+catch里是不是也要this.$scope.$apply();
+不需要的
+尽量少用any，这边能否加个接口限制
+使用 enum SUPPORTED_LANGUAGES.EN_US
+最好加个注释，说明下新加的状态是迁移用的
+👌，加好了。
+这个用constants.js中定义的吃常量
+i是不是可以换成更加有意义一点的名称
+common包有声明静态路径吗，如果用的多，../../../../是不是不太方便
+这个是指定只有‘’和null这两种才可以吗，如果falsy的都可以的话，可以取非直接判断吗，！parentFapiao.checker || ！parentFapiao.payee
+看到这样的方法名，我会觉得他应该返回一个bool值。
+直接!childItem.payee || !childItem.checker就行了
+同上
+use standard unit
+elementName -> name
+需要根据发票类型再检查check code或totalExtax
+chang const name to MIN_SCAN_CHAR_COUNT
+change name to getScannerObservable()
+const [ext0, ext1, code, num, total, issDateStr, checkCodeSegment] = result; 
+ should be better
+逻辑反了
+是不是应该写个属性形式的directive，各自只负责自己的事件监听？
+这个if加上注释
+太简单的逻辑可以不用单独定义text
+replace只会替换第一个匹配的字符
+replace只会替换第一个匹配的字符
+field.value.replace(str, '')
+文件名改为 -> ScannerUtil
+因为目前delay的主要目的是确保保存发票的动作在修改四字段之后，
+ 最好把delay方法放到getInvoiceInputScannerObservable函数内部
+labeld的ng-if可以去掉了吧
+翻译为什么去掉了？
+忘记了，加上啦
+这个不需要加翻译吗
+需要修改 getOption的实现方式
+这个抛出错误到浏览器，给我们开发人员看（开发人员写代码写错了的情况下发生），华鹏说暂时不用翻译
+把Set Translations Branch 这个stage删掉好了

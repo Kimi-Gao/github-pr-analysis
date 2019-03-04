@@ -5,7 +5,7 @@ const segment = new Segment();
 
 segment.useDefault();
 segment.loadStopwordDict('./data/dict/stopword.txt');
-const text = fs.readFileSync('./data/raw.txt', { encoding: 'utf8' });
+const text = fs.readFileSync('./data/damo7/raw.txt', { encoding: 'utf8' });
 
 let rawData = segment.doSegment(text, {
   stripPunctuation: true,
@@ -29,7 +29,7 @@ basicProcessedData.forEach(element => {
 });
 
 Object.keys(result).forEach(v => {
-  fs.writeFile(`./data/result/${v}.txt`, result[v].join(' / '), 'utf8', (err) => {
+  fs.writeFile(`./data/damo7/result/${v}.txt`, result[v].join(' / '), 'utf8', (err) => {
     if (err) throw err;
     console.log(`${v}.txt has been saved!`);
   });

@@ -2,3 +2,8 @@ image
 nvmrc
 js
 md
+tradeshift
+apps
+会
+写
+使用

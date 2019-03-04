@@ -180,8 +180,6 @@ class App extends Component {
               <table border="1">
                 <thead>
                   <tr>
-                    <td>Id</td>
-                    <td>PR</td>
                     <td>Comment</td>
                   </tr>
                 </thead>
@@ -189,8 +187,6 @@ class App extends Component {
                 {this.state.allComments.map((v, i) => {
                   return (
                     <tr key={i}>
-                      <td>{i+1}</td>
-                      <td><a href={v.prUrl}>{v.prNo}</a></td>
                       <td>{v.comment}</td>
                     </tr>
                   )
