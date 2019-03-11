@@ -41,6 +41,8 @@ Open the project in Gitpod (free online dev environment for GitHub) and start co
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/muwenzi/github-pr-analysis)
 
+The templates based on ant-design-pro, more instructions at [documentation](https://github.com/ant-design/ant-design-pro).
+
 ## Browsers support
 
 Modern browsers and IE11.
