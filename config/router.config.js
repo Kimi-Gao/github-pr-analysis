@@ -25,7 +25,7 @@ export default [
       {
         path: '/dashboard',
         name: 'Dashboard',
-        icon: 'dashboard',
+        icon: '',
         routes: [
           {
             path: '/dashboard/analysis',
@@ -35,8 +35,8 @@ export default [
         ],
       },
       {
-        name: 'account',
-        icon: 'user',
+        name: 'Settings',
+        icon: '',
         path: '/account',
         routes: [
           {

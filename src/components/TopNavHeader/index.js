@@ -32,7 +32,7 @@ export default class TopNavHeader extends PureComponent {
           <div className={styles.left}>
             <div className={styles.logo} key="logo" id="logo">
               <Link to="/">
-                {!!logo && <img src={logo} alt="logo" />}
+                {/* {!!logo && <img src={logo} alt="logo" />} */}
                 <h1>{title}</h1>
               </Link>
             </div>

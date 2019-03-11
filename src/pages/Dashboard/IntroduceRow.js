@@ -25,7 +25,6 @@ const IntroduceRow = memo(({ loading, crData, prData }) => {
   const PRsLabelCountTotal = Object.keys(PRsLabelCount).map(tag => PRsLabelCount[tag]).reduce((a, b) => a + b)
   const fixedPRRate = ((PRsLabelCount['PR: FIXED'] / PRsLabelCountTotal) * 100).toFixed(1)
   const developerStar = getDeveloperStar(prData, crData)
-  console.log('developerStar', developerStar)
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
