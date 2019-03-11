@@ -4,6 +4,7 @@ import { formatMessage, FormattedMessage } from 'umi/locale';
 import { ChartCard, Gauge, MiniProgress, Field } from '@/components/Charts';
 import Trend from '@/components/Trend';
 import { getFunctionalPRs, getPRsLabelCount } from '@/utils/pr';
+import { getDeveloperStar } from '@/utils/cr';
 import numeral from 'numeral';
 import styles from './Analysis.less';
 
@@ -16,13 +17,15 @@ const topColResponsiveProps = {
   style: { marginBottom: 24 },
 };
 
-const IntroduceRow = memo(({ loading, prData }) => {
+const IntroduceRow = memo(({ loading, crData, prData }) => {
   const businessPRCount = getFunctionalPRs(prData).length
   const allPRCount = prData.length
   const businessPRRate = ((businessPRCount / allPRCount) * 100).toFixed(1)
   const PRsLabelCount = getPRsLabelCount(prData)
   const PRsLabelCountTotal = Object.keys(PRsLabelCount).map(tag => PRsLabelCount[tag]).reduce((a, b) => a + b)
   const fixedPRRate = ((PRsLabelCount['PR: FIXED'] / PRsLabelCountTotal) * 100).toFixed(1)
+  const developerStar = getDeveloperStar(prData, crData)
+  console.log('developerStar', developerStar)
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
@@ -65,30 +68,30 @@ const IntroduceRow = memo(({ loading, prData }) => {
           title={<FormattedMessage id="app.analysis.visits" defaultMessage="Developer Star" />}
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={<div>PR: NEW: +8<br />PR: ADDED: +5<br />PR: IMPROVED: +3<br />PR: FIXED: +2<br />Others: +1<br />Comment/Approve: +1</div>}
             >
               <Icon type="info-circle-o" />
             </Tooltip>
           }
-          total="Kimi"
+          total={_.get(developerStar, 'user.name')}
           footer={
             <Field
               label={<FormattedMessage id="app.analysis.day-visits" defaultMessage="Total Score" />}
-              value={numeral(107).format('0,0')}
+              value={_.get(developerStar, 'score.total')}
             />
           }
           contentHeight={46}
         >
-          <img style={{width: 50, height: 50, border: '1px solid #ddd', borderRadius: '50%', float: 'right'}} alt="" src="https://avatars0.githubusercontent.com/u/12554487?s=460&v=4" />
+          <img style={{width: 50, height: 50, border: '1px solid #ddd', borderRadius: '50%', float: 'right'}} alt="" src={_.get(developerStar, 'user.avatar')} />
           <br />
           <Trend style={{ marginRight: 16 }}>
             <FormattedMessage id="app.analysis.week" defaultMessage="PR Score" />
-            <span className={styles.trendText}>39</span>
+            <span className={styles.trendText}>{_.get(developerStar, 'score.pr')}</span>
           </Trend>
           <br />
           <Trend>
             <FormattedMessage id="app.analysis.day" defaultMessage="CR Score" />
-            <span className={styles.trendText}>68</span>
+            <span className={styles.trendText}>{_.get(developerStar, 'score.cr')}</span>
           </Trend>
         </ChartCard>
       </Col>

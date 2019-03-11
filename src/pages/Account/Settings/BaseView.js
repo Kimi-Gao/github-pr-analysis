@@ -74,7 +74,7 @@ class BaseView extends Component {
     if (currentUser.avatar) {
       return currentUser.avatar;
     }
-    const url = 'https://avatars0.githubusercontent.com/u/12554487?s=460&v=4';
+    const url = 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png';
     return url;
   }
 

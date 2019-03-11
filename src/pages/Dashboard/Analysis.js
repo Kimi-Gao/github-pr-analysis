@@ -82,7 +82,6 @@ class Analysis extends Component {
     const { rangePickerValue } = this.state;
     const { chart, loading } = this.props;
     const {
-      visitData,
       sprintOverviewData,
       prData,
       crData
@@ -91,14 +90,16 @@ class Analysis extends Component {
       const userPRLabels = getUserPRLabelsByUserName(v.id, prData)
       return {
         State: v.id,
+        avatar: v.avatar,
         ...userPRLabels
       }
     })
     const crUserData = crData && crData.reviewers && crData.reviewers.map(v => {
       return {
         State: v.name,
-        Comment: v.commentedCount,
-        Approve: v.approvedCount
+        avatar: v.avatar,
+        Comment: v.Comment,
+        Approve: v.Approve
       }
     })
 
@@ -112,7 +113,7 @@ class Analysis extends Component {
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>
-          <IntroduceRow loading={loading} visitData={visitData} prData={prData} />
+          <IntroduceRow loading={loading} crData={crData} prData={prData} />
         </Suspense>
         <Suspense fallback={null}>
           <SprintOverview

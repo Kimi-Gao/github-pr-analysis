@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Row, Col, Card, Tabs, DatePicker } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi/locale';
+import { prWeight, crWeight, getObjTotalValue } from '@/utils/cr';
 import numeral from 'numeral';
 import _ from 'lodash'
 import styles from './Analysis.less';
@@ -20,12 +21,13 @@ const config = {
   }
 }
 
-function getRankingListData(data, tags) {
+function getRankingListData(data, weight) {
   const rankingListData = [];
   data.forEach((v) => {
     rankingListData.push({
       title: v.State,
-      total: tags.map(tag => v[tag]).reduce((a, b) => a + b),
+      avatar: v.avatar,
+      total: getObjTotalValue(_.omit(v, ['State', 'avatar']), weight),
     });
   })
   return _.sortBy(rankingListData, v => v.total).reverse();
@@ -89,17 +91,18 @@ const Ranking = memo(
                   <h4 className={styles.rankingTitle}>
                     <FormattedMessage
                       id="app.analysi.sales-ranking"
-                      defaultMessage="PR Ranking"
+                      defaultMessage="PR Score Ranking"
                     />
                   </h4>
                   <ul className={styles.rankingList}>
-                    {getRankingListData(prData, config.pr.tags).map((item, i) => (
+                    {getRankingListData(prData, prWeight).map((item, i) => (
                       <li key={item.title}>
                         <span
                           className={`${styles.rankingItemNumber} ${i < 3 ? styles.active : ''}`}
                         >
                           {i + 1}
                         </span>
+                        <img className={styles.rankingItemAvatar} src={item.avatar} alt="Avatar" />
                         <span className={styles.rankingItemTitle} title={item.title}>
                           {item.title}
                         </span>
@@ -139,17 +142,18 @@ const Ranking = memo(
                   <h4 className={styles.rankingTitle}>
                     <FormattedMessage
                       id="app.analysi.visits-ranking"
-                      defaultMessage="CR Ranking"
+                      defaultMessage="CR Score Ranking"
                     />
                   </h4>
                   <ul className={styles.rankingList}>
-                    {getRankingListData(crData, config.cr.tags).map((item, i) => (
+                    {getRankingListData(crData, crWeight).map((item, i) => (
                       <li key={item.title}>
                         <span
                           className={`${styles.rankingItemNumber} ${i < 3 ? styles.active : ''}`}
                         >
                           {i + 1}
                         </span>
+                        <img className={styles.rankingItemAvatar} src={item.avatar} alt="Avatar" />
                         <span className={styles.rankingItemTitle} title={item.title}>
                           {item.title}
                         </span>

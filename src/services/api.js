@@ -69,18 +69,22 @@ export function getAllComments (PRs) {
           .forEach(v => {
             const reviewer = reviewers.find(user => user.name === v.user.login)
             if (reviewer) {
-              v.state === 'COMMENTED' && reviewer.commentedCount++
-              v.state === 'APPROVED' && reviewer.approvedCount++
+              v.state === 'COMMENTED' && reviewer.Comment++
+              v.state === 'APPROVED' && reviewer.Approve++
             } else {
               reviewers.push({
                 name: v.user.login,
-                commentedCount: v.state === 'COMMENTED' ? 1 : 0,
-                approvedCount: v.state === 'APPROVED' ? 1 : 0,
+                avatar: v.user.avatar_url,
+                Comment: v.state === 'COMMENTED' ? 1 : 0,
+                Approve: v.state === 'APPROVED' ? 1 : 0,
               })
             }
           })
         data.length && data.forEach(v => {
-          result.push({comment: v.body, prUrl: v._links.html.href, prNo: v.pull_request_url.split('/')[v.pull_request_url.split('/').length - 1]})
+          result.push({
+            comment: v.body,
+            prUrl: v._links.html.href,
+            prNo: v.pull_request_url.split('/')[v.pull_request_url.split('/').length - 1]})
         });
         count++
         if (count === PRsLength) {

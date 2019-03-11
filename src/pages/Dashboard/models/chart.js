@@ -4,7 +4,6 @@ export default {
   namespace: 'chart',
 
   state: {
-    visitData: [],
     visitData2: [],
     salesData: [],
     searchData: [],
@@ -46,7 +45,6 @@ export default {
     },
     clear() {
       return {
-        visitData: [],
         visitData2: [],
         salesData: [],
         searchData: [],

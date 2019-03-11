@@ -2,13 +2,20 @@ export const VALID_LABELS = ['PR: NEW', 'PR: ADDED', 'PR: IMPROVED', 'PR: FIXED'
 export const ALL_LABELS = [...VALID_LABELS, 'PR: Others']
 export const REPOS = ['Apps', 'cn-pay-apps']
 
-export function getUniqueUser (PRs) {
+export function getUniqueUser (PRs, reviewers) {
   const uniqueUser = []
-  PRs.forEach(v => {
+  _.forEach(PRs, v => {
     !uniqueUser.find(user => user.id === v.user.login) &&
     uniqueUser.push({
       id: v.user.login,
       avatar: v.user.avatar_url
+    })
+  })
+  _.forEach(reviewers, r => {
+    !uniqueUser.find(user => user.id === r.name) &&
+    uniqueUser.push({
+      id: r.name,
+      avatar: r.avatar
     })
   })
   return uniqueUser
