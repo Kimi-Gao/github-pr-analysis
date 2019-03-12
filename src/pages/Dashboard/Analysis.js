@@ -15,9 +15,10 @@ const SprintOverview = React.lazy(() => import('./SprintOverview'));
 const Proportion = React.lazy(() => import('./Proportion'));
 const Ranking = React.lazy(() => import('./Ranking'));
 
-@connect(({ chart, loading }) => ({
+@connect(({ chart, loading, setting }) => ({
   chart,
-  loading: loading.effects['chart/fetch'],
+  setting,
+  loading: loading.effects['chart/fetch']
 }))
 class Analysis extends Component {
   state = {
@@ -80,7 +81,7 @@ class Analysis extends Component {
 
   render() {
     const { rangePickerValue } = this.state;
-    const { chart, loading } = this.props;
+    const { chart, loading, setting } = this.props;
     const {
       sprintOverviewData,
       prData,
@@ -113,7 +114,7 @@ class Analysis extends Component {
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>
-          <IntroduceRow loading={loading} crData={crData} prData={prData} />
+          <IntroduceRow loading={loading} crData={crData} prData={prData} setting={setting} />
         </Suspense>
         <Suspense fallback={null}>
           <SprintOverview

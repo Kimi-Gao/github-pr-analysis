@@ -4,38 +4,42 @@ import autoHeight from '../autoHeight';
 
 const { Arc, Html, Line } = Guide;
 
-const defaultFormatter = val => {
-  switch (val) {
-    case '2':
-      return '差';
-    case '4':
-      return '中';
-    case '6':
-      return '良';
-    case '8':
-      return '优';
-    default:
-      return '';
-  }
-};
+// const defaultFormatter = val => {
+//   switch (val) {
+//     case '20':
+//       return 'D';
+//     case '40':
+//       return 'C';
+//     case '60':
+//       return 'B+';
+//     case '80':
+//       return 'A+';
+//     default:
+//       return val;
+//   }
+// };
+
+const colors = ['#f5222d', '#ff7a45', '#faad14', '#fadb14', '#a0d911', '#52c41a']
 
 const getColor = ({value}) => {
-  switch (Math.floor(value)) {
+  switch (Math.floor(value / 10)) {
     case 0:
     case 1:
     case 2:
     case 3:
+      return colors[0];
     case 4:
+      return colors[1];
     case 5:
-      return '#f5222d';
+      return colors[2];
     case 6:
-      return '#fa8c16';
+      return colors[3];
     case 7:
-      return '#fadb14';
+      return colors[4];
     case 8:
     case 9:
     case 10:
-      return '#52c41a';
+      return colors[5];
     default:
       return '#2F9CFF';
   }
@@ -81,7 +85,7 @@ class Gauge extends React.Component {
       height,
       percent,
       forceFit = true,
-      formatter = defaultFormatter,
+      // formatter = defaultFormatter,
       bgColor = '#F0F2F5',
       style
     } = this.props;
@@ -89,12 +93,12 @@ class Gauge extends React.Component {
       value: {
         type: 'linear',
         min: 0,
-        max: 10,
+        max: 100,
         tickCount: 6,
         nice: true,
       },
     };
-    const data = [{ value: percent / 10 }];
+    const data = [{ value: percent }];
     const color = getColor(data[0]);
       return (
         <Chart height={height} data={data} scale={cols} padding={[-16, 0, 16, 0]} forceFit={forceFit} style={style}>
@@ -108,47 +112,33 @@ class Gauge extends React.Component {
             zIndex={2}
             gird={null}
             label={{
-            offset: -12,
-            formatter,
-            textStyle: {
-              fontSize: 12,
-              fill: 'rgba(0, 0, 0, 0.65)',
-              textAlign: 'center',
-            },
-          }}
+              offset: -13,
+              // formatter,
+              textStyle: {
+                fontSize: 12,
+                fill: 'rgba(0, 0, 0, 0.65)',
+                textAlign: 'center',
+              },
+            }}
           />
           <Guide>
-            <Line
-              start={[3, 0.905]}
-              end={[3, 0.85]}
-              lineStyle={{
-              stroke: color,
-              lineDash: null,
-              lineWidth: 2,
-            }}
-            />
-            <Line
-              start={[5, 0.905]}
-              end={[5, 0.85]}
-              lineStyle={{
-              stroke: color,
-              lineDash: null,
-              lineWidth: 3,
-            }}
-            />
-            <Line
-              start={[7, 0.905]}
-              end={[7, 0.85]}
-              lineStyle={{
-              stroke: color,
-              lineDash: null,
-              lineWidth: 3,
-            }}
-            />
+            {[0.5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 99.5].map(value => {
+              return (
+                <Line
+                  start={[value, 0.905]}
+                  end={[value, 0.8]}
+                  lineStyle={{
+                    stroke: color,
+                    lineDash: null,
+                    lineWidth: 2,
+                  }}
+                />
+              )
+            })}
             <Arc
               zIndex={0}
               start={[0, 0.965]}
-              end={[10, 0.965]}
+              end={[100, 0.965]}
               style={{
               stroke: bgColor,
               lineWidth: 10,
@@ -169,7 +159,7 @@ class Gauge extends React.Component {
                 <div style="width: 300px;text-align: center;font-size: 12px!important;">
                   <!--<p style="font-size: 14px; color: rgba(0,0,0,0.43);margin: 0;">${title}</p>-->
                   <p style="font-size: 28px;font-weight: 500;color: ${color};margin: 0;">
-                    ${data[0].value * 10}
+                    ${data[0].value}
                   </p>
                 </div>`}
             />

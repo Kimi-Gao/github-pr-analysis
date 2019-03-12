@@ -69,3 +69,31 @@ export function getDeveloperStar(prData, crData) {
   })
   return _.maxBy(userWithScore, 'score.total');
 }
+
+export function calculateCodeQualityScore(currentPRFixedRate, allPRCount, crData, targetPRFixedRate) {
+  let Comment = 0;
+  _.forEach(crData.reviewers, r => {
+    Comment += r.Comment;
+  })
+  const commentRate = Comment / allPRCount
+  const prScore = (100 - currentPRFixedRate) * 0.9
+  const crOffset = 1 - commentRate
+  let crScore = (50 + crOffset * (crOffset > 1 ? 10 : 50)) * 0.1
+  crScore = crScore > 0 ? crScore : 0
+  const extraScore = currentPRFixedRate <= targetPRFixedRate ? 10 : 0
+  const total =  prScore + crScore + extraScore
+  return total < 100 ? Math.round(total) : 100
+}
+
+export function calculateCodeQualityLevel(codeScore) {
+  const levelMap = {
+    4: 'C',
+    5: 'B',
+    6: 'B+',
+    7: 'A',
+    8: 'A+',
+    9: 'A+',
+    10: 'A+',
+  }
+  return levelMap[Math.floor(codeScore / 10)] || 'D'
+}
