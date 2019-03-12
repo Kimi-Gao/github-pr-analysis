@@ -67,7 +67,7 @@ const IntroduceRow = memo(({ loading, crData, prData }) => {
           title={<FormattedMessage id="app.analysis.visits" defaultMessage="Developer Star" />}
           action={
             <Tooltip
-              title={<div>PR: NEW: +8<br />PR: ADDED: +5<br />PR: IMPROVED: +3<br />PR: FIXED: +2<br />Others: +1<br />Comment/Approve: +1</div>}
+              title={<div>PR: NEW: +10<br />PR: ADDED: +8<br />PR: IMPROVED: +6<br />PR: FIXED: +4<br />Others: +3<br />Comment: +2<br />Approve: +1</div>}
             >
               <Icon type="info-circle-o" />
             </Tooltip>
