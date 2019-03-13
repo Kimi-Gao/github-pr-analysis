@@ -3,13 +3,15 @@
   "owner": "TradeshiftCN",
   "repo": "Apps",
   "state": "all",
-  "milestone": 2,
-  "per_page": 100
+  "milestone": 3,
+  "per_page": 100,
+  "pages": [1, 2]
 }, {
   "name": "cnPayApps",
   "owner": "TradeshiftCN",
   "repo": "cn-pay-apps",
   "state": "all",
-  "milestone": 2,
-  "per_page": 100
+  "milestone": 3,
+  "per_page": 100,
+  "pages": [1]
 }]

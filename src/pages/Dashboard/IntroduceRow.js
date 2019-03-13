@@ -26,40 +26,53 @@ const IntroduceRow = memo(({ loading, crData, prData, setting }) => {
   const PRsLabelCountTotal = getObjTotalValue(PRsLabelCount)
   const fixedPRRate = ((PRsLabelCount['PR: FIXED'] / PRsLabelCountTotal) * 100).toFixed(1)
   const developerStar = getDeveloperStar(prData, crData)
-  const targetPRFixedRate = setting.lastSprintPRFixedRate - 3
+  const {lastSprintPRFixedRate} = setting
+  const targetPRFixedRate = lastSprintPRFixedRate - 3
   const codeQualityScore = calculateCodeQualityScore(fixedPRRate, allPRCount, crData, targetPRFixedRate)
   return (
     <Row gutter={24}>
       <Col {...topColResponsiveProps}>
         <ChartCard
           bordered={false}
-          title={<FormattedMessage id="app.analysis.total-sales" defaultMessage="Business PR" />}
+          title={<FormattedMessage id="app.analysis.total-sales" defaultMessage="Pull Requests" />}
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Merged PR except closed" />}
             >
               <Icon type="info-circle-o" />
             </Tooltip>
           }
           loading={loading}
-          total={numeral(businessPRCount).format('0,0')}
+          total={numeral(allPRCount).format('0,0')}
           footer={
             <Field
-              label={<FormattedMessage id="app.analysis.day-sales" defaultMessage="Rate" />}
+              label={<FormattedMessage id="app.analysis.day-sales" defaultMessage="Business PR" />}
               value={businessPRRate}
             />
           }
           contentHeight={46}
         >
           <Trend>
-            <FormattedMessage id="app.analysis.day" defaultMessage="Others" />
-            <span className={styles.trendText}>{allPRCount - businessPRCount}</span>
+            <FormattedMessage id="app.analysis.day" defaultMessage="Business PR" />
+            <span className={styles.trendText}>{businessPRCount}</span>
           </Trend>
           <br />
           <Trend style={{ marginRight: 16 }}>
-            <FormattedMessage id="app.analysis.week" defaultMessage="Total PR" />
-            <span className={styles.trendText}>{allPRCount}</span>
+            <FormattedMessage id="app.analysis.week" defaultMessage="Other PR" />
+            <span className={styles.trendText}>{allPRCount - businessPRCount}</span>
           </Trend>
+          <div className={styles.prMerged}>
+            <svg
+              className={styles.octIconMerged}
+              viewBox="0 0 12 16"
+              version="1.1"
+              width="12"
+              height="16"
+              aria-hidden="true"
+            >
+              <path fillRule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z" />
+            </svg>
+          </div>
         </ChartCard>
       </Col>
 
@@ -110,7 +123,7 @@ const IntroduceRow = memo(({ loading, crData, prData, setting }) => {
           }
           action={
             <Tooltip
-              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />}
+              title={<FormattedMessage id="app.analysis.introduce" defaultMessage="PR: FIXED in Business PR" />}
             >
               <Icon type="info-circle-o" />
             </Tooltip>
@@ -118,9 +131,9 @@ const IntroduceRow = memo(({ loading, crData, prData, setting }) => {
           total={`${fixedPRRate}%`}
           footer={
             <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-              <Trend style={{ marginRight: 16 }}>
-                <FormattedMessage id="app.analysis.week" defaultMessage="Target" />
-                <span className={styles.trendText}>{targetPRFixedRate}%</span>
+              <Trend flag={lastSprintPRFixedRate < fixedPRRate ? 'up' : 'down'} style={{ marginRight: 16 }}>
+                <FormattedMessage id="app.analysis.week" defaultMessage="Last Sprint" />
+                <span className={styles.trendText}>{lastSprintPRFixedRate}%</span>
               </Trend>
             </div>
           }

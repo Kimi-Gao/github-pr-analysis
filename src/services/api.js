@@ -28,14 +28,19 @@ octokit.authenticate({
 export async function getPRsByMilestone () {
   const resultObj = {}
   const resultArr = []
-  for (const e of config) {
-    resultObj[e.name] = (await octokit.issues.listForRepo({
-      owner: e.owner,
-      repo: e.repo,
-      state: e.state,
-      milestone: e.milestone,
-      per_page: e.per_page
-    })).data
+  for (const c of config) {
+    resultObj[c.name] = []
+    for (const page of c.pages) {
+      const data = (await octokit.issues.listForRepo({
+        owner: c.owner,
+        repo: c.repo,
+        state: c.state,
+        milestone: c.milestone,
+        per_page: c.per_page,
+        page
+      })).data
+      resultObj[c.name].push(...data)
+    }
   }
   Object.keys(resultObj).forEach(objKey => {
     resultArr.push(...resultObj[objKey])
