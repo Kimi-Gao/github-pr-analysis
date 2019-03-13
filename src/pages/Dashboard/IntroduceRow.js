@@ -120,7 +120,7 @@ const IntroduceRow = memo(({ loading, crData, prData, setting }) => {
             <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
               <Trend style={{ marginRight: 16 }}>
                 <FormattedMessage id="app.analysis.week" defaultMessage="Target" />
-                <span className={styles.trendText}>{targetPRFixedRate}</span>
+                <span className={styles.trendText}>{targetPRFixedRate}%</span>
               </Trend>
             </div>
           }
