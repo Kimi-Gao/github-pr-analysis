@@ -30,8 +30,10 @@ export async function getPRsByMilestone () {
   const resultArr = []
   for (const c of config) {
     resultObj[c.name] = []
-    for (const page of c.pages) {
-      const data = (await octokit.issues.listForRepo({
+    let prList = []
+    let page = 1
+    do {
+      prList = (await octokit.issues.listForRepo({
         owner: c.owner,
         repo: c.repo,
         state: c.state,
@@ -39,8 +41,9 @@ export async function getPRsByMilestone () {
         per_page: c.per_page,
         page
       })).data
-      resultObj[c.name].push(...data)
-    }
+      resultObj[c.name].push(...prList)
+      page++
+    } while (prList.length === c.per_page)
   }
   Object.keys(resultObj).forEach(objKey => {
     resultArr.push(...resultObj[objKey])
