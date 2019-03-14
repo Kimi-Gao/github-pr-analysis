@@ -1,3 +1,6 @@
+import moment from 'moment';
+import _ from 'lodash';
+
 export const VALID_LABELS = ['PR: NEW', 'PR: ADDED', 'PR: IMPROVED', 'PR: FIXED']
 export const ALL_LABELS = [...VALID_LABELS, 'PR: Others']
 export const REPOS = ['Apps', 'cn-pay-apps']
@@ -90,4 +93,45 @@ export function getPRsLabelCount (repoPRs) {
     // }
   })
   return PRLabels
+}
+
+export function getSprintOverviewData (prData) {
+  if(_.isEmpty(prData)) {
+    return {};
+  }
+
+  const simplifiedPRs = prData.map(prItem => {
+    // every Pr can only be fixed or non-fixed
+    const date = moment(prItem.created_at).format('YYYY-MM-DD');
+    const fixLabelCount = date === '2019-01-24' ? 0 : Number(prItem.labels.some(label => label.name === 'PR: FIXED'));
+    const otherLabelCount = date === '2019-01-24' ? 0 : 1 - fixLabelCount;
+    return {
+      date,
+      fixLabelCount,
+      otherLabelCount
+    }
+  });
+
+  const organizePRs = _.reduce(simplifiedPRs, function(result, value) {
+    const { date, fixLabelCount, otherLabelCount } = value;
+    if(!result[date]) {
+      result[date] = {
+        y1: otherLabelCount,
+        y2: fixLabelCount
+      };
+    } else {
+      const { y1, y2 }  = result[date];
+      result[date] = {
+        y1: y1 + otherLabelCount,
+        y2: y2 + fixLabelCount
+      };
+    }
+    return result;
+  }, {});
+
+  return _.map(organizePRs, (value, key) => ({
+      x: new Date(key).getTime(),
+      y1: value.y1,
+      y2: value.y2
+  }));
 }

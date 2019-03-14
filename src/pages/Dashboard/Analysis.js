@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import { FormattedMessage } from 'umi/locale';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import { getTimeDistance } from '@/utils/utils';
-import { getUniqueUser, getPRsLabelCount, getUserPRLabelsByUserName } from '@/utils/pr';
+import { getUniqueUser, getPRsLabelCount, getUserPRLabelsByUserName, getSprintOverviewData } from '@/utils/pr';
 import { getCRTotal } from '@/utils/cr';
 import styles from './Analysis.less';
 import PageLoading from '@/components/PageLoading';
@@ -83,10 +83,12 @@ class Analysis extends Component {
     const { rangePickerValue } = this.state;
     const { chart, loading, setting } = this.props;
     const {
-      sprintOverviewData,
       prData,
       crData
     } = chart;
+
+    const sprintOverviewData = getSprintOverviewData(prData);
+
     const prUserData = prData && getUniqueUser(prData).map(v => {
       const userPRLabels = getUserPRLabelsByUserName(v.id, prData)
       return {
