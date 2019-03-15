@@ -135,7 +135,7 @@ export function getSprintOverviewData (prData) {
     y1: value.y1,
     y2: value.y2
   }))
-  res.pop()
+  // res.pop()
 
   const total = _.map(_.reverse(res), (v, i) => {
     let index = i
