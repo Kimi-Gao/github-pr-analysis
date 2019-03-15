@@ -103,35 +103,55 @@ export function getSprintOverviewData (prData) {
   const simplifiedPRs = prData.map(prItem => {
     // every Pr can only be fixed or non-fixed
     const date = moment(prItem.created_at).format('YYYY-MM-DD');
-    const fixLabelCount = date === '2019-01-24' ? 0 : Number(prItem.labels.some(label => label.name === 'PR: FIXED'));
-    const otherLabelCount = date === '2019-01-24' ? 0 : 1 - fixLabelCount;
+    // isFixLabel and isOtherLabel is 0 / 1, not boolean
+    const isFixLabel = Number(prItem.labels.some(label => label.name === 'PR: FIXED'));
+    const isOtherLabel = 1 - isFixLabel;
     return {
       date,
-      fixLabelCount,
-      otherLabelCount
+      isFixLabel,
+      isOtherLabel
     }
   });
 
-  const organizePRs = _.reduce(simplifiedPRs, function(result, value) {
-    const { date, fixLabelCount, otherLabelCount } = value;
+  const organizePRs = _.reduce(simplifiedPRs, (result, value) => {
+    const { date, isFixLabel, isOtherLabel } = value;
     if(!result[date]) {
       result[date] = {
-        y1: otherLabelCount,
-        y2: fixLabelCount
+        y1: isOtherLabel,
+        y2: isFixLabel
       };
     } else {
       const { y1, y2 }  = result[date];
       result[date] = {
-        y1: y1 + otherLabelCount,
-        y2: y2 + fixLabelCount
+        y1: y1 + isOtherLabel,
+        y2: y2 + isFixLabel
       };
     }
     return result;
   }, {});
 
-  return _.map(organizePRs, (value, key) => ({
-      x: new Date(key).getTime(),
-      y1: value.y1,
-      y2: value.y2
-  }));
+  const res = _.map(organizePRs, (value, key) => ({
+    x: new Date(key).getTime(),
+    y1: value.y1,
+    y2: value.y2
+  }))
+  res.pop()
+
+  const total = _.map(_.reverse(res), (v, i) => {
+    let index = i
+    let y1 = 0
+    let y2 = 0
+    do {
+      y1 += res[index].y1
+      y2 += res[index].y2
+      index--
+    } while (index >= 0)
+    return {
+      x: v.x,
+      y1,
+      y2
+    }
+  })
+
+  return total
 }
