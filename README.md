@@ -8,7 +8,7 @@ Data analysis of pull requests for your github repo.
 [![Build Status](https://img.shields.io/travis/muwenzi/github-pr-analysis/master.svg?style=flat-square)](https://travis-ci.org/muwenzi/github-pr-analysis)
 [![license](https://img.shields.io/github/license/muwenzi/github-pr-analysis.svg?style=flat-square)](https://github.com/muwenzi/github-pr-analysis/blob/master/LICENSE)
 
-![Screenshot](https://user-images.githubusercontent.com/12554487/54403808-57385500-470c-11e9-8344-3d33336d940e.jpg)
+![Screenshot](https://user-images.githubusercontent.com/12554487/54664928-8d1c7580-4b20-11e9-95d6-698830ee04a5.png)
 
 </div>
 
