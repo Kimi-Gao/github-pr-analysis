@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import defaultSettings from '../defaultSettings';
 import { getUniqueUser, getUserPRLabelsByUserName } from './pr'
 
 export const prWeight = {
@@ -63,7 +64,7 @@ export function getDeveloperStar(prData, crData) {
       score: {
         pr: prScore,
         cr: crScore,
-        total: prScore + crScore
+        total: defaultSettings.developerStarBlackList.includes(v.id) ? 0 : prScore + crScore
       }
     }
   })

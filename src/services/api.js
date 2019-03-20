@@ -1,9 +1,10 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
 import Octokit from '@octokit/rest'
-import config from './config.json'
+import defaultSettings from '../defaultSettings'
 
 const octokit = Octokit()
+const config = defaultSettings.repos
 
 let githubToken
 try {

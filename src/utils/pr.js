@@ -108,7 +108,7 @@ export function getSprintOverviewData (prData) {
       'PR: IMPROVED': 0,
       'PR: FIXED': 0
     }
-    const date = moment(prItem.created_at).format('YYYY-MM-DD');
+    const date = moment(prItem.closed_at).format('YYYY-MM-DD');
     if (prItem.labels.length) {
       for (const [i, label] of prItem.labels.entries()) {
         if (VALID_LABELS.includes(label.name)) {
@@ -124,7 +124,7 @@ export function getSprintOverviewData (prData) {
     }
   });
 
-  const organizePRs = _.reduce(simplifiedPRs, (result, value) => {
+  const organizePRs = _.reduce(_.sortBy(simplifiedPRs, 'date'), (result, value) => {
     const { date } = value;
     if(!result[date]) {
       result[date] = {
@@ -153,7 +153,7 @@ export function getSprintOverviewData (prData) {
     y4: value.y4
   }))
 
-  const total = _.map(_.reverse(res), (v, i) => {
+  const total = _.map(res, (v, i) => {
     let index = i
     let y1 = 0
     let y2 = 0
