@@ -15,8 +15,10 @@ const SprintOverview = memo(
           height={400}
           data={sprintOverviewData}
           titleMap={{
-            y1: 'PR: non-FIXED',
-            y2: 'PR: FIXED',
+            y1: 'PR: NEW',
+            y2: 'PR: ADDED',
+            y3: 'PR: IMPROVED',
+            y4: 'PR: FIXED'
           }}
         />
       </div>

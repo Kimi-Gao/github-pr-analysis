@@ -15,20 +15,24 @@ class TimelineChart extends React.Component {
       titleMap = {
         y1: 'y1',
         y2: 'y2',
+        y3: 'y3',
+        y4: 'y4'
       },
       borderWidth = 2,
       data: sourceData,
     } = this.props;
 
-    const data = Array.isArray(sourceData) && sourceData.length ? sourceData : [{ x: 0, y1: 0, y2: 0 }];
+    const data = Array.isArray(sourceData) && sourceData.length ? sourceData : [{ x: 0, y1: 0, y2: 0, y3: 0, y4: 0 }];
 
     data.sort((a, b) => a.x - b.x);
 
     let max;
-    if (data[0] && data[0].y1 && data[0].y2) {
+    if (data[0] && data[0].y1 && data[0].y2 && data[0].y3 && data[0].y4) {
       max = Math.max(
         [...data].sort((a, b) => b.y1 - a.y1)[0].y1,
-        [...data].sort((a, b) => b.y2 - a.y2)[0].y2
+        [...data].sort((a, b) => b.y2 - a.y2)[0].y2,
+        [...data].sort((a, b) => b.y3 - a.y3)[0].y3,
+        [...data].sort((a, b) => b.y4 - a.y4)[0].y4
       );
     }
 
@@ -54,14 +58,17 @@ class TimelineChart extends React.Component {
           const newRow = { ...row };
           newRow[titleMap.y1] = row.y1;
           newRow[titleMap.y2] = row.y2;
+          newRow[titleMap.y3] = row.y3;
+          newRow[titleMap.y4] = row.y4;
+
           return newRow;
         },
       })
       .transform({
         type: 'fold',
-        fields: [titleMap.y1, titleMap.y2], // 展开字段集
+        fields: [titleMap.y1, titleMap.y2, titleMap.y3, titleMap.y4], // 展开字段集
         key: 'key', // key字段
-        value: 'value', // value字段
+        value: 'y', // value字段
       });
 
     const timeScale = {
@@ -104,9 +111,31 @@ class TimelineChart extends React.Component {
           {title && <h4>{title}</h4>}
           <Chart height={height} padding={padding} data={dv} scale={cols} forceFit>
             <Axis name="x" />
+            <Axis
+              name="y"
+              label={{
+                formatter: val => `${val}%`
+              }}
+            />
             <Tooltip />
             <Legend name="key" position="top" />
-            <Geom type="line" position="x*value" size={borderWidth} color={['key', ['#52c41a', '#f5222d']]} />
+            <Geom
+              type="line"
+              position="x*y"
+              size={borderWidth}
+              color={['key', ['#0e8a16', '#c2e0c6', '#1c69d3', '#ee0701']]}
+            />
+            <Geom
+              type="point"
+              position="x*y"
+              size={3}
+              shape="circle"
+              color={['key', ['#0e8a16', '#c2e0c6', '#1c69d3', '#ee0701']]}
+              style={{
+                stroke: "#fff",
+                lineWidth: 1
+              }}
+            />
           </Chart>
           <div style={{ marginRight: -20 }}>
             <SliderGen />

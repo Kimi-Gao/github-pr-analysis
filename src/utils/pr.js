@@ -1,4 +1,5 @@
 import moment from 'moment';
+import numeral from 'numeral';
 import _ from 'lodash';
 
 export const VALID_LABELS = ['PR: NEW', 'PR: ADDED', 'PR: IMPROVED', 'PR: FIXED']
@@ -101,30 +102,44 @@ export function getSprintOverviewData (prData) {
   }
 
   const simplifiedPRs = prData.map(prItem => {
-    // every Pr can only be fixed or non-fixed
+    const PRLabels = {
+      'PR: NEW': 0,
+      'PR: ADDED': 0,
+      'PR: IMPROVED': 0,
+      'PR: FIXED': 0
+    }
     const date = moment(prItem.created_at).format('YYYY-MM-DD');
-    // isFixLabel and isOtherLabel is 0 / 1, not boolean
-    const isFixLabel = Number(prItem.labels.some(label => label.name === 'PR: FIXED'));
-    const isOtherLabel = 1 - isFixLabel;
+    if (prItem.labels.length) {
+      for (const [i, label] of prItem.labels.entries()) {
+        if (VALID_LABELS.includes(label.name)) {
+          PRLabels[label.name] = 1
+          break
+        }
+      }
+    }
+
     return {
       date,
-      isFixLabel,
-      isOtherLabel
+      ...PRLabels
     }
   });
 
   const organizePRs = _.reduce(simplifiedPRs, (result, value) => {
-    const { date, isFixLabel, isOtherLabel } = value;
+    const { date } = value;
     if(!result[date]) {
       result[date] = {
-        y1: isOtherLabel,
-        y2: isFixLabel
+        y1: value['PR: NEW'],
+        y2: value['PR: ADDED'],
+        y3: value['PR: IMPROVED'],
+        y4: value['PR: FIXED']
       };
     } else {
-      const { y1, y2 }  = result[date];
+      const { y1, y2, y3, y4 }  = result[date];
       result[date] = {
-        y1: y1 + isOtherLabel,
-        y2: y2 + isFixLabel
+        y1: y1 + value['PR: NEW'],
+        y2: y2 + value['PR: ADDED'],
+        y3: y3 + value['PR: IMPROVED'],
+        y4: y4 + value['PR: FIXED']
       };
     }
     return result;
@@ -133,25 +148,41 @@ export function getSprintOverviewData (prData) {
   const res = _.map(organizePRs, (value, key) => ({
     x: new Date(key).getTime(),
     y1: value.y1,
-    y2: value.y2
+    y2: value.y2,
+    y3: value.y3,
+    y4: value.y4
   }))
-  // res.pop()
 
   const total = _.map(_.reverse(res), (v, i) => {
     let index = i
     let y1 = 0
     let y2 = 0
+    let y3 = 0
+    let y4 = 0
     do {
       y1 += res[index].y1
       y2 += res[index].y2
+      y3 += res[index].y3
+      y4 += res[index].y4
       index--
     } while (index >= 0)
+    const businessPRTotal = y1 + y2 + y3 + y4
     return {
       x: v.x,
-      y1,
-      y2
+      y1: (y1 / businessPRTotal).toFixed(3) * 100,
+      y2: (y2 / businessPRTotal).toFixed(3) * 100,
+      y3: (y3 / businessPRTotal).toFixed(3) * 100,
+      y4: (y4 / businessPRTotal).toFixed(3) * 100
     }
   })
+
+  const endDate = new Date(_.get(prData, '0.milestone.due_on')).getTime()
+
+  if (_.last(total).x < endDate) {
+    total.push({
+      x: endDate
+    })
+  }
 
   return total
 }
