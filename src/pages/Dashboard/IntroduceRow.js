@@ -26,7 +26,8 @@ const IntroduceRow = memo(({ loading, crData, prData, setting }) => {
   const PRsLabelCountTotal = getObjTotalValue(PRsLabelCount)
   const fixedPRRate = ((PRsLabelCount['PR: FIXED'] / PRsLabelCountTotal) * 100).toFixed(1)
   const developerStar = getDeveloperStar(prData, crData)
-  const {lastSprintPRFixedRate} = setting
+  const {sprintConfig, lastSprint} = setting
+  const lastSprintPRFixedRate = _.get(_.find(sprintConfig, sc => sc.sprint === lastSprint), 'fixedRate') || 50
   const targetPRFixedRate = lastSprintPRFixedRate
   const codeQualityScore = calculateCodeQualityScore(fixedPRRate, allPRCount, crData, targetPRFixedRate)
   return (

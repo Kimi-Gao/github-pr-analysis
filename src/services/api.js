@@ -1,10 +1,11 @@
 import { stringify } from 'qs';
+import _ from 'lodash';
 import request from '@/utils/request';
 import Octokit from '@octokit/rest'
 import defaultSettings from '../defaultSettings'
 
 const octokit = Octokit()
-const config = defaultSettings.repos
+const config = (_.find(_.get(defaultSettings, 'sprintConfig'), sc => sc.sprint === defaultSettings.currentSprint) || {}).repos
 
 let githubToken
 try {

@@ -15,21 +15,82 @@ module.exports = {
   // eg：//at.alicdn.com/t/font_1039637_btcrd5co4w.js
   // 注意：如果需要图标多色，Iconfont图标项目里要进行批量去色处理
   iconfontUrl: '',
-  lastSprintPRFixedRate: 43.3,
   developerStarBlackList: ['Chris-Xie'],
-  repos: [{
-    "name": "apps",
-    "owner": "TradeshiftCN",
-    "repo": "Apps",
-    "state": "closed",
-    "milestone": 4,
-    "per_page": 100
-  }, {
-    "name": "cnPayApps",
-    "owner": "TradeshiftCN",
-    "repo": "cn-pay-apps",
-    "state": "closed",
-    "milestone": 4,
-    "per_page": 100
-  }]
+  lastSprint: 'Damo-7',
+  currentSprint: 'Damo-8',
+  sprintConfig: [
+    {
+      "sprint": 'Damo-6',
+      "fixedRate": 50.8,
+      repos: [{
+        "name": "apps",
+        "owner": "TradeshiftCN",
+        "repo": "Apps",
+        "state": "closed",
+        "milestone": 1,
+        "per_page": 100
+      }, {
+        "name": "cnPayApps",
+        "owner": "TradeshiftCN",
+        "repo": "cn-pay-apps",
+        "state": "closed",
+        "milestone": 1,
+        "per_page": 100
+      }]
+    }, {
+      "sprint": 'Damo-7',
+      "fixedRate": 54.7,
+      repos: [{
+        "name": "apps",
+        "owner": "TradeshiftCN",
+        "repo": "Apps",
+        "state": "closed",
+        "milestone": 2,
+        "per_page": 100
+      }, {
+        "name": "cnPayApps",
+        "owner": "TradeshiftCN",
+        "repo": "cn-pay-apps",
+        "state": "closed",
+        "milestone": 2,
+        "per_page": 100
+      }]
+    }, {
+      "sprint": 'Damo-8',
+      "fixedRate": 43.3,
+      repos: [{
+        "name": "apps",
+        "owner": "TradeshiftCN",
+        "repo": "Apps",
+        "state": "closed",
+        "milestone": 3,
+        "per_page": 100
+      }, {
+        "name": "cnPayApps",
+        "owner": "TradeshiftCN",
+        "repo": "cn-pay-apps",
+        "state": "closed",
+        "milestone": 3,
+        "per_page": 100
+      }]
+    }, {
+      "sprint": 'Damo-9',
+      "fixedRate": null,
+      repos: [{
+        "name": "apps",
+        "owner": "TradeshiftCN",
+        "repo": "Apps",
+        "state": "closed",
+        "milestone": 4,
+        "per_page": 100
+      }, {
+        "name": "cnPayApps",
+        "owner": "TradeshiftCN",
+        "repo": "cn-pay-apps",
+        "state": "closed",
+        "milestone": 4,
+        "per_page": 100
+      }]
+    }
+  ]
 };
