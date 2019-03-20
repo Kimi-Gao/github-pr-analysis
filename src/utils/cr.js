@@ -81,7 +81,7 @@ export function calculateCodeQualityScore(currentPRFixedRate, allPRCount, crData
   const crOffset = 1 - commentRate
   let crScore = (50 + crOffset * (crOffset > 1 ? 10 : 50)) * 0.1
   crScore = crScore > 0 ? crScore : 0
-  const extraScore = currentPRFixedRate <= targetPRFixedRate ? 5 : 0
+  const extraScore = currentPRFixedRate < targetPRFixedRate ? 5 : 0
   const total =  prScore + crScore + extraScore
   return total < 100 ? Math.round(total) : 100
 }
