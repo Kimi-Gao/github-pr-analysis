@@ -16,8 +16,8 @@ module.exports = {
   // 注意：如果需要图标多色，Iconfont图标项目里要进行批量去色处理
   iconfontUrl: '',
   developerStarBlackList: ['Chris-Xie'],
-  lastSprint: 'Damo-7',
-  currentSprint: 'Damo-8',
+  lastSprint: 'Damo-8',
+  currentSprint: 'Damo-9',
   sprintConfig: [
     {
       "sprint": 'Damo-6',
@@ -89,6 +89,13 @@ module.exports = {
         "repo": "cn-pay-apps",
         "state": "closed",
         "milestone": 4,
+        "per_page": 100
+      }, {
+        "name": "cnResellerMarketplaceApps",
+        "owner": "TradeshiftCN",
+        "repo": "cn-reseller-marketplace-apps",
+        "state": "closed",
+        "milestone": 1,
         "per_page": 100
       }]
     }
