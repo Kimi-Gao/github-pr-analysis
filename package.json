@@ -87,7 +87,7 @@
     "jest-puppeteer": "^4.0.0",
     "less": "^3.9.0",
     "lint-staged": "^8.1.1",
-    "merge-umi-mock-data": "^1.0.4",
+    "merge-umi-mock-data": "^2.0.6",
     "mockjs": "^1.0.1-beta3",
     "prettier": "^1.16.4",
     "slash2": "^2.0.0",
